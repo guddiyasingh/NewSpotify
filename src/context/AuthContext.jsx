@@ -13,6 +13,7 @@ export function AuthProvider({ children }) {
       setUser(currentUser)
       setLoading(false)
     })
+
     return unsubscribe
   }, [])
 
@@ -23,4 +24,7 @@ export function AuthProvider({ children }) {
   )
 }
 
-export const useAuth = () => useContext(AuthContext)
+// optional helper hook
+export function useAuth() {
+  return useContext(AuthContext)
+}
