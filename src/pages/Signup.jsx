@@ -3,6 +3,7 @@ import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { auth } from "../firebase"
+import GoogleLoginButton from "./GoogleLogin"
 
 export default function Signup() {
   const [email, setEmail] = useState("")
@@ -104,16 +105,18 @@ export default function Signup() {
           </div>
 
           {/* Google (later) */}
-          <button  
+          <GoogleLoginButton />
+
+          {/* <button  
             onClick={handleGoogleSignup}
           className="w-full border border-neutral-600 py-3 rounded-full flex items-center justify-center gap-2 hover:bg-neutral-800 transition">
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
               alt="google"
               className="w-5 h-5"
-            />
-            Continue with Google
-          </button>
+            /> */}
+            {/* Continue with Google
+          </button> */}
 
           {/* Login link */}
           <p className="text-sm text-center text-gray-400 mt-6">
