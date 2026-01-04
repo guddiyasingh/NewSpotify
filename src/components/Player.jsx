@@ -1,92 +1,69 @@
 import { useEffect, useState } from "react"
 
-function Player({
-  song,
-  audioRef,
-  onNext,
-  onPrev,
-  onShuffle,
-  onRepeat,
-  isShuffle,
-  repeatMode,
-  onEnded
-}) {
-  const [currentTime, setCurrentTime] = useState(0)
-  const [duration, setDuration] = useState(0)
+export default function Player({ songs, currentSong, setCurrentSong }) {
+  const [isPlaying, setIsPlaying] = useState(false)
+  const audio = document.getElementById("audio-player")
 
   useEffect(() => {
-    const audio = audioRef.current
+    if (currentSong && audio) {
+      audio.load()
+      audio.play()
+      setIsPlaying(true)
+    }
+  }, [currentSong])
+
+  const playPause = () => {
     if (!audio) return
 
-    const updateTime = () => setCurrentTime(audio.currentTime)
-    const setMeta = () => setDuration(audio.duration)
-
-    audio.addEventListener("timeupdate", updateTime)
-    audio.addEventListener("loadedmetadata", setMeta)
-    audio.addEventListener("ended", onEnded)
-
-    return () => {
-      audio.removeEventListener("timeupdate", updateTime)
-      audio.removeEventListener("loadedmetadata", setMeta)
-      audio.removeEventListener("ended", onEnded)
+    if (isPlaying) {
+      audio.pause()
+    } else {
+      audio.play()
     }
-  }, [song])
-
-  const handleSeek = (e) => {
-    audioRef.current.currentTime = e.target.value
+    setIsPlaying(!isPlaying)
   }
 
-  const formatTime = (time) => {
-    if (!time) return "0:00"
-    const min = Math.floor(time / 60)
-    const sec = Math.floor(time % 60).toString().padStart(2, "0")
-    return `${min}:${sec}`
+  const playNext = () => {
+    const index = songs.findIndex(s => s.id === currentSong.id)
+    const next = songs[index + 1] || songs[0]
+    setCurrentSong(next)
   }
 
-  if (!song) return <div className="player">Select a song</div>
+  const playPrev = () => {
+    const index = songs.findIndex(s => s.id === currentSong.id)
+    const prev = songs[index - 1] || songs[songs.length - 1]
+    setCurrentSong(prev)
+  }
+
+  if (!currentSong) return null
 
   return (
-  
-  <div className="bg-black p-4 border-t border-zinc-800">
-    <p className="text-sm mb-2 text-gray-300">
-      {song ? `Now Playing: ${song.title}` : "Select a song"}
-    </p>
+    <div className="fixed bottom-0 left-0 w-full bg-neutral-900 text-white px-6 py-4 flex items-center justify-between">
 
-    <audio ref={audioRef} src={song?.file} />
+      {/* Song Info */}
+      <div>
+        <p className="font-semibold">{currentSong.title}</p>
+      </div>
 
-    <div className="flex items-center gap-4">
-      <button
-        onClick={onShuffle}
-        className={isShuffle ? "text-spotify" : ""}
+      {/* Controls */}
+      <div className="flex items-center gap-6 text-xl">
+        <button onClick={playPrev}>⏮</button>
+        <button
+          onClick={playPause}
+          className="bg-white text-black rounded-full px-4 py-1"
+        >
+          {isPlaying ? "⏸" : "▶"}
+        </button>
+        <button onClick={playNext}>⏭</button>
+      </div>
+
+      {/* Audio */}
+      <audio
+        id="audio-player"
+        onEnded={playNext}
       >
-        🔀
-      </button>
-
-      <button onClick={onPrev}>⏮</button>
-      <button onClick={onPlayPause}>⏯</button>
-      <button onClick={onNext}>⏭</button>
-
-      <button
-        onClick={onRepeat}
-        className={repeatMode !== "off" ? "text-spotify" : ""}
-      >
-        🔁
-      </button>
+        <source src={currentSong.file} />
+      </audio>
     </div>
-
-    {/* Progress bar */}
-    <input
-      type="range"
-      className="w-full mt-3 accent-spotify"
-      min="0"
-      max={duration || 0}
-      value={currentTime}
-      onChange={handleSeek}
-    />
-  </div>
-)
-
-  
+  )
 }
-
-export default Player

@@ -1,22 +1,15 @@
-function SongList({ songs, onPlay }) {
+export default function SongList({ songs, setCurrentSong }) {
   return (
-    <>
-      <h2 className="text-2xl font-bold mb-4">Songs</h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {songs.map((song, index) => (
-          <div
-            key={song.id}
-            onClick={() => onPlay(index)}
-            className="bg-dark2 p-4 rounded-lg hover:bg-zinc-700 cursor-pointer transition"
-          >
-            <p className="font-semibold">{song.title}</p>
-            <p className="text-sm text-gray-400">Click to play</p>
-          </div>
-        ))}
-      </div>
-    </>
+    <div className="p-6 text-white">
+      {songs.map(song => (
+        <div
+          key={song.id}
+          className="p-2 hover:bg-neutral-800 cursor-pointer rounded"
+          onClick={() => setCurrentSong(song)}
+        >
+          {song.title}
+        </div>
+      ))}
+    </div>
   )
 }
-
-export default SongList
