@@ -1,26 +1,31 @@
-import { Link } from "react-router-dom"
-
-function Sidebar() {
+export default function Sidebar() {
   return (
-    <div className="w-64 bg-black p-6">
-      <h1 className="text-2xl font-bold text-spotify mb-6">
-        Spotify
-      </h1>
+    <aside className="w-60 bg-black border-r border-neutral-800 p-4 hidden md:block">
 
       <nav className="space-y-4">
-        <Link to="/" className="block hover:text-spotify">
-          🏠 Home
-        </Link>
-        <Link to="/login" className="block hover:text-spotify">
-          🔐 Login
-        </Link>
-        <Link to="/signup" className="block hover:text-spotify">
-          ✍️ Sign Up
-        </Link>
+
+        <a className="block text-gray-300 hover:text-white font-medium">
+          Home
+        </a>
+
+        <a className="block text-gray-300 hover:text-white font-medium">
+          Search
+        </a>
+
+        <a className="block text-gray-300 hover:text-white font-medium">
+          Your Library
+        </a>
+
       </nav>
-    </div>
+
+      <div className="mt-8 border-t border-neutral-800 pt-4 space-y-2 text-sm text-gray-400">
+        <p>Liked Songs</p>
+        <p>My Playlist #1</p>
+        <p>My Playlist #2</p>
+      </div>
+
+    </aside>
   )
 }
 
-export default Sidebar
 
