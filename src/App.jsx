@@ -1,10 +1,10 @@
-import AppLayout from "./layout/AppLayout"
+import SpotifyLayout from "./layout/SpotifyLayout"
 import Home from "./pages/Home"
 
 export default function App() {
   return (
-    <AppLayout>
+    <SpotifyLayout>
       <Home />
-    </AppLayout>
+    </SpotifyLayout>
   )
 }

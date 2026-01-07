@@ -1,5 +1,5 @@
 import Sidebar from "../components/Sidebar"
-import TopNavbar from "../components/TopNavbar"
+import Navbar from "../components/Navbar"
 import Player from "../components/Player"
 
 export default function SpotifyLayout({ children, playerProps }) {
@@ -7,7 +7,7 @@ export default function SpotifyLayout({ children, playerProps }) {
     <div className="h-screen bg-black text-white flex flex-col">
 
       {/* TOP NAVBAR */}
-      <TopNavbar />
+      <Navbar />
 
       {/* MIDDLE SECTION */}
       <div className="flex flex-1 overflow-hidden">
