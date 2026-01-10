@@ -1,6 +1,22 @@
-export default function Player() {
+  
+  import { usePlayer } from "../context/PlayerContext"
+
+  export default function Player() {
+
+// const { currentSong, isPlaying, pauseSong } = usePlayer()
+
+//   if (!currentSong) return null
+
+
   return (
+
+    
     <footer className="h-20 bg-black border-t border-neutral-800 px-6 flex items-center justify-between">
+  
+        {/* <div className="fixed bottom-0 w-full bg-black text-white p-4">
+      <p>{currentSong.title}</p>
+       {isPlaying && <button onClick={pauseSong}>Pause</button>}
+     </div>  */}
 
       {/* Song Info */}
       <div className="flex items-center gap-4">
@@ -29,3 +45,18 @@ export default function Player() {
     </footer>
   )
 }
+
+
+
+// export default function Player() {
+//   const { currentSong, isPlaying, pauseSong } = usePlayer()
+
+//   if (!currentSong) return null
+
+//   return (
+//     <div className="fixed bottom-0 w-full bg-black text-white p-4">
+//       <p>{currentSong.title}</p>
+//       {isPlaying && <button onClick={pauseSong}>Pause</button>}
+//     </div>
+//   )
+// }

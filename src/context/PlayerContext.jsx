@@ -77,20 +77,33 @@
 // export const usePlayer = () => useContext(PlayerContext)
 
 
-import { createContext, useContext, useState } from "react"
+
+
+import { createContext, useContext, useRef, useState } from "react"
 
 const PlayerContext = createContext()
 
 export function PlayerProvider({ children }) {
+  const audioRef = useRef(new Audio())
   const [currentSong, setCurrentSong] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const playSong = (song) => {
+    if (!song) return
+
+    if (audioRef.current.src !== window.location.origin + song.src) {
+      audioRef.current.src = song.src
+    }
+
+    audioRef.current.play()
     setCurrentSong(song)
     setIsPlaying(true)
   }
 
-  const pauseSong = () => setIsPlaying(false)
+  const pauseSong = () => {
+    audioRef.current.pause()
+    setIsPlaying(false)
+  }
 
   return (
     <PlayerContext.Provider
@@ -101,5 +114,7 @@ export function PlayerProvider({ children }) {
   )
 }
 
-export const usePlayer = () => useContext(PlayerContext)
-
+/* 👇 THIS EXPORT WAS MISSING OR BROKEN */
+export function usePlayer() {
+  return useContext(PlayerContext)
+}
