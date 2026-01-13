@@ -79,24 +79,64 @@
 
 
 
+// import { createContext, useContext, useRef, useState } from "react"
+
+// const PlayerContext = createContext()
+
+// export function PlayerProvider({ children }) {
+//   const audioRef = useRef(new Audio())
+//   const [currentSong, setCurrentSong] = useState(null)
+//   const [isPlaying, setIsPlaying] = useState(false)
+
+//   const playSong = (song) => {
+//     if (!song) return
+
+//     if (audioRef.current.src !== window.location.origin + song.src) {
+//       audioRef.current.src = song.src
+//     }
+
+//     audioRef.current.play()
+//     setCurrentSong(song)
+//     setIsPlaying(true)
+//   }
+
+//   const pauseSong = () => {
+//     audioRef.current.pause()
+//     setIsPlaying(false)
+//   }
+
+//   return (
+//     <PlayerContext.Provider
+//       value={{ currentSong, isPlaying, playSong, pauseSong }}
+//     >
+//       {children}
+//     </PlayerContext.Provider>
+//   )
+// }
+
+// /* 👇 THIS EXPORT WAS MISSING OR BROKEN */
+// export function usePlayer() {
+//   return useContext(PlayerContext)
+// }
+
 import { createContext, useContext, useRef, useState } from "react"
+import songs from "../data/songs"
 
 const PlayerContext = createContext()
 
 export function PlayerProvider({ children }) {
   const audioRef = useRef(new Audio())
-  const [currentSong, setCurrentSong] = useState(null)
+  const [currentIndex, setCurrentIndex] = useState(null)
   const [isPlaying, setIsPlaying] = useState(false)
 
   const playSong = (song) => {
-    if (!song) return
+    const index = songs.findIndex((s) => s.id === song.id)
+    if (index === -1) return
 
-    if (audioRef.current.src !== window.location.origin + song.src) {
-      audioRef.current.src = song.src
-    }
-
+    audioRef.current.src = song.src
     audioRef.current.play()
-    setCurrentSong(song)
+
+    setCurrentIndex(index)
     setIsPlaying(true)
   }
 
@@ -105,16 +145,35 @@ export function PlayerProvider({ children }) {
     setIsPlaying(false)
   }
 
+  const nextSong = () => {
+    if (currentIndex === null) return
+    const nextIndex = (currentIndex + 1) % songs.length
+    playSong(songs[nextIndex])
+  }
+
+  const prevSong = () => {
+    if (currentIndex === null) return
+    const prevIndex =
+      (currentIndex - 1 + songs.length) % songs.length
+    playSong(songs[prevIndex])
+  }
+
   return (
     <PlayerContext.Provider
-      value={{ currentSong, isPlaying, playSong, pauseSong }}
+      value={{
+        currentSong: songs[currentIndex],
+        isPlaying,
+        playSong,
+        pauseSong,
+        nextSong,
+        prevSong,
+      }}
     >
       {children}
     </PlayerContext.Provider>
   )
 }
 
-/* 👇 THIS EXPORT WAS MISSING OR BROKEN */
 export function usePlayer() {
   return useContext(PlayerContext)
 }
