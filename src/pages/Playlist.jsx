@@ -128,36 +128,36 @@
 //   )
 // }
 
-import { usePlayer } from "../context/PlayerContext"
+// import { usePlayer } from "../context/PlayerContext"
 
-export default function Player() {
-  const { currentSong, isPlaying, togglePlay } = usePlayer()
+// export default function Player() {
+//   const { currentSong, isPlaying, togglePlay } = usePlayer()
 
-  // 🔴 THIS IS WHY PLAYER DOESN'T SHOW
-  if (!currentSong) return null
+//   // 🔴 THIS IS WHY PLAYER DOESN'T SHOW
+//   if (!currentSong) return null
 
-  return (
-    <div className="h-24 bg-neutral-900 border-t border-neutral-800 flex items-center px-6">
-      <div className="flex items-center gap-4 w-1/3">
-        <img
-          src={currentSong.cover}
-          alt={currentSong.title}
-          className="w-14 h-14 rounded"
-        />
-        <div>
-          <p className="font-semibold">{currentSong.title}</p>
-          <p className="text-sm text-gray-400">{currentSong.artist}</p>
-        </div>
-      </div>
+//   return (
+//     <div className="h-24 bg-neutral-900 border-t border-neutral-800 flex items-center px-6">
+//       <div className="flex items-center gap-4 w-1/3">
+//         <img
+//           src={currentSong.cover}
+//           alt={currentSong.title}
+//           className="w-14 h-14 rounded"
+//         />
+//         <div>
+//           <p className="font-semibold">{currentSong.title}</p>
+//           <p className="text-sm text-gray-400">{currentSong.artist}</p>
+//         </div>
+//       </div>
 
-      <div className="w-1/3 flex justify-center">
-        <button
-          onClick={togglePlay}
-          className="bg-white text-black px-4 py-2 rounded-full"
-        >
-          {isPlaying ? "Pause" : "Play"}
-        </button>
-      </div>
-    </div>
-  )
-}
+//       <div className="w-1/3 flex justify-center">
+//         <button
+//           onClick={togglePlay}
+//           className="bg-white text-black px-4 py-2 rounded-full"
+//         >
+//           {isPlaying ? "Pause" : "Play"}
+//         </button>
+//       </div>
+//     </div>
+//   )
+// }/
